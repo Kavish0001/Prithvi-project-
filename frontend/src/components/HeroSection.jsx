@@ -15,16 +15,7 @@ export const HeroSection = () => {
           transition={{ duration: 0.6 }}
           className="max-w-4xl mx-auto text-center space-y-6"
         >
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[hsl(var(--success-light))] text-[hsl(var(--success))] text-sm font-medium"
-          >
-            <Shield className="h-4 w-4" />
-            Trusted by 50,000+ drivers
-          </motion.div>
-          
+    
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
             Car Broke Down?
             <br />

@@ -14,7 +14,7 @@ const guideData = {
     severity: 'medium',
     estimatedTime: '20-30 minutes',
     difficulty: 'Beginner',
-    videoUrl: 'https://www.youtube.com/embed/4X8s2R8iWPE',
+    videoUrl: 'https://www.youtube.com/watch?v=3aQRO29ZzbE',
     safetyTips: [
       'Park on a flat, stable surface away from traffic',
       'Turn on hazard lights immediately',
@@ -92,7 +92,7 @@ const guideData = {
     severity: 'low',
     estimatedTime: '10-15 minutes',
     difficulty: 'Beginner',
-    videoUrl: 'https://www.youtube.com/embed/iI1o2hNy2hE',
+    videoUrl: 'https://www.youtube.com/watch?v=iI1o2hNy2hE',
     safetyTips: [
       'Ensure both vehicles are turned off',
       'Check for battery damage or leaks',
@@ -162,7 +162,7 @@ const guideData = {
     severity: 'high',
     estimatedTime: '30-60 minutes',
     difficulty: 'Intermediate',
-    videoUrl: 'https://www.youtube.com/embed/t_PQ8rQj4J8',
+    videoUrl: 'https://www.youtube.com/watch?v=MrBI1hRTgx4',
     safetyTips: [
       'Pull over immediately when you notice overheating',
       'Never open the radiator cap when hot',
@@ -232,7 +232,7 @@ const guideData = {
     severity: 'critical',
     estimatedTime: 'Immediate',
     difficulty: 'Emergency Response',
-    videoUrl: 'https://www.youtube.com/embed/dWSoN9e0H_g',
+    videoUrl: 'https://www.youtube.com/watch?v=6RQ9UabOIPg',
     safetyTips: [
       'Stay calm and don\'t panic',
       'Don\'t turn off the engine',
@@ -300,7 +300,7 @@ const guideData = {
     severity: 'medium',
     estimatedTime: '15-30 minutes',
     difficulty: 'Beginner to Intermediate',
-    videoUrl: 'https://www.youtube.com/embed/RRbWKWM4bPA',
+    videoUrl: 'https://www.youtube.com/watch?v=FJ5K4lE-ThM',
     safetyTips: [
       'Ensure vehicle is in Park or Neutral',
       'Keep clear of moving parts',
@@ -369,7 +369,7 @@ const guideData = {
     severity: 'low',
     estimatedTime: '30-60 minutes',
     difficulty: 'Easy',
-    videoUrl: 'https://www.youtube.com/embed/Z06a1DXJyvc',
+    videoUrl: 'https://www.youtube.com/watch?v=PoFRQfqOh-k',
     safetyTips: [
       'Pull over safely as soon as possible',
       'Turn on hazard lights',
@@ -455,6 +455,32 @@ const getSeverityColor = (severity) => {
     default:
       return 'bg-muted text-muted-foreground';
   }
+};
+
+const convertToEmbedUrl = (url) => {
+  if (!url) return '';
+  
+  // If already an embed URL, return as is
+  if (url.includes('youtube.com/embed/')) {
+    return url;
+  }
+  
+  // Extract video ID from various YouTube URL formats
+  let videoId = '';
+  
+  // Handle watch URLs: https://www.youtube.com/watch?v=VIDEO_ID
+  const watchMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
+  if (watchMatch) {
+    videoId = watchMatch[1];
+  }
+  
+  // If we found a video ID, convert to embed URL
+  if (videoId) {
+    return `https://www.youtube.com/embed/${videoId}`;
+  }
+  
+  // If no match, return original URL (might be a different format)
+  return url;
 };
 
 export const GuideDisplay = ({ problem, carDetails, onClose }) => {
@@ -794,7 +820,7 @@ export const GuideDisplay = ({ problem, carDetails, onClose }) => {
                   <iframe
                     width="100%"
                     height="100%"
-                    src={guide.videoUrl}
+                    src={convertToEmbedUrl(guide.videoUrl)}
                     title={guide.title}
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
